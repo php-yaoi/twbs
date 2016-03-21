@@ -1,0 +1,33 @@
+{
+    "require": {
+        "php": ">=5.3.0",
+        "php-yaoi/php-yaoi": "dev-dirty"
+    },
+    "require-dev": {
+        "codeclimate/php-test-reporter": "dev-master",
+        "phpunit/phpunit": "~4.0"
+    },
+    "name": "php-yaoi/twbs",
+    "type": "library",
+    "description": "Twitter Bootstrap bindings for php-yaoi",
+    "keywords": ["framework"],
+    "homepage": "https://github.com/php-yaoi/twbs",
+    "license": "MIT",
+    "authors": [
+        {
+            "name": "Viacheslav Poturaev",
+            "email": "vearutop@gmail.com",
+            "homepage": "https://github.com/vearutop"
+        }
+    ],
+    "autoload": {
+        "psr-4": {
+            "Yaoi\\Twbs\\": "src/"
+        }
+    },
+    "autoload-dev": {
+        "psr-4": {
+            "Yaoi\\Twbs\\Tests\\": "tests/src/"
+        }
+    }
+}
