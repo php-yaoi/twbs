@@ -4,6 +4,6 @@
 
 ```
 composer require php-yaoi/twbs
-cp -r vendor/php-yaoi/twbs/public public
+cp -r vendor/php-yaoi/twbs/public/* ./public
 ```
 
