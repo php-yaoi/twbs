@@ -2,20 +2,24 @@
 
 namespace Yaoi\Twbs\Io\Content;
 
+use Yaoi\Command;
 use Yaoi\Command\Definition;
 use Yaoi\Command\Io;
 use Yaoi\Io\Content\Renderer;
 
 class Form implements Renderer
 {
-    /** @var Definition */
-    protected $definition;
+    /** @var Command|\stdClass */
+    protected $commandState;
     /** @var Io */
     protected $io;
 
-    public function __construct(Definition $definition, Io $io)
+
+    public function __construct($commandState, Io $io)
     {
-        $this->definition = $definition;
+        var_dump($commandState);
+        $this->commandState = $commandState;
+        $this->io = $io;
     }
 
 
@@ -28,8 +32,23 @@ class Form implements Renderer
 
     public function render()
     {
-        echo '<form method="post">';
-        foreach ($this->definition->optionsArray() as $option) {
+        /** @var Command $class */
+        $class = $this->commandState->commandClass;
+        $action = $this->io->makeAnchor($class::createState());
+
+        echo '<form method="post" action="' . $action . '">';
+        foreach ($class::definition()->optionsArray() as $option) {
+
+            $value = '';
+            if (isset($this->commandState->{$option->name})) {
+                $value = $this->commandState->{$option->name};
+                if ($value instanceof Definition) {
+                    $value = '';
+                }
+            }
+
+            var_dump($value);
+
             $labelCaption = $option->description ? $option->description : $option->name;
             $id = 'formItem' . ++self::$surrogateId;
             $name = $this->io->getRequestMapper()->getExportName($option);
@@ -37,18 +56,25 @@ class Form implements Renderer
             echo <<<HTML
  <div class="form-group">
     <label for="$id">$labelCaption</label>
-    <input class="form-control" id="$id" name="$name" placeholder="$labelCaption">
+    <input class="form-control" id="$id" name="$name" placeholder="$labelCaption" value="$value">
  </div>
   
 HTML;
 
         }
-        echo '</form>';
+        echo '<button type="submit">piu piu</button></form>';
     }
 
     public function __toString()
     {
-        return '';
+        ob_start();
+        try {
+            $this->render();
+        }
+        catch (\Exception $e) {
+            var_dump($e);
+        }
+        return ob_get_clean();
     }
 
 
