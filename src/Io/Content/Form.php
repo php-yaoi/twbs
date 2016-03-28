@@ -17,7 +17,6 @@ class Form implements Renderer
 
     public function __construct($commandState, Io $io)
     {
-        var_dump($commandState);
         $this->commandState = $commandState;
         $this->io = $io;
     }
@@ -46,8 +45,6 @@ class Form implements Renderer
                     $value = '';
                 }
             }
-
-            var_dump($value);
 
             $labelCaption = $option->description ? $option->description : $option->name;
             $id = 'formItem' . ++self::$surrogateId;
