@@ -59,7 +59,9 @@ class Form implements Renderer
 HTML;
 
         }
-        echo '<button type="submit">piu piu</button></form>';
+        $submitName = $class::definition()->getName();
+        echo '<button type="submit" class="btn btn-default">' . $submitName . '</button>';
+        echo '</form>';
     }
 
     public function __toString()
