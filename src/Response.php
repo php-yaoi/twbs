@@ -5,13 +5,13 @@ namespace Yaoi\Twbs;
 use Yaoi\Io\Content\Anchor;
 use Yaoi\Twbs\Io\Content\Badge;
 use Yaoi\Io\Content\Error;
+use Yaoi\Io\Content\Heading;
 use Yaoi\Io\Content\ItemList;
 use Yaoi\Io\Content\Multiple;
 use Yaoi\Io\Content\Rows;
 use Yaoi\Io\Content\SubContent;
 use Yaoi\Io\Content\Success;
 use Yaoi\Io\Content\Text;
-use Yaoi\Twbs\Io\Content\Label;
 use Yaoi\View\Renderer;
 use Yaoi\View\Table\HTML;
 
@@ -44,7 +44,7 @@ class Response extends \Yaoi\Io\Response implements Renderer
         switch (true) {
             case $message instanceof Rows:
                 $table = new HTML();
-                $table->addClass('table table-striped');
+                $table->addClass('table table-striped table-responsive');
                 foreach ($message->getIterator() as $item) {
                     foreach ($item as $key => $value) {
                         $item [$key] = $this->renderMessage($value);
@@ -52,6 +52,9 @@ class Response extends \Yaoi\Io\Response implements Renderer
                     $table->addRow($item);
                 }
                 return (string)$table;
+
+            case $message instanceof Heading:
+                return '<h2>' . $message->value . '</h2>';
 
             case $message instanceof Error:
                 return '<div role="alert" class="alert alert-danger"><strong>OOPS!</strong> '
@@ -73,12 +76,7 @@ class Response extends \Yaoi\Io\Response implements Renderer
             return $ret;
 
             case $message instanceof Badge:
-                return '<span class="badge">' . $this->renderMessage($message->value) . '</span>';
-
-            case $message instanceof Label:
-                return '<span class="label label-' . $message->style . '">'
-                . $this->renderMessage($message->value) . '</span>';
-
+                return '<span class="badge label label-default">' . $this->renderMessage($message->value) . '</span>';
 
             case $message instanceof Text:
                 return '<div class="text ' . $message->type . '">' . $this->renderMessage($message->value) . '</div>';
@@ -110,6 +108,18 @@ class Response extends \Yaoi\Io\Response implements Renderer
     public function __toString()
     {
         return $this->content;
+    }
+
+
+    public function setLayout(Layout $layout)
+    {
+        $this->layout = $layout;
+    }
+
+    protected $layout;
+    public function getLayout()
+    {
+        return $this->layout;
     }
 
 
