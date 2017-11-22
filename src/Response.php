@@ -3,6 +3,7 @@
 namespace Yaoi\Twbs;
 
 use Yaoi\Io\Content\Anchor;
+use Yaoi\Mappable\Contract;
 use Yaoi\Twbs\Io\Content\Badge;
 use Yaoi\Io\Content\Error;
 use Yaoi\Io\Content\Heading;
@@ -46,6 +47,9 @@ class Response extends \Yaoi\Io\Response implements Renderer
                 $table = new HTML();
                 $table->addClass('table table-striped table-responsive');
                 foreach ($message->getIterator() as $item) {
+                    if ($item instanceof Contract) {
+                        $item = $item->toArray();
+                    }
                     foreach ($item as $key => $value) {
                         $item [$key] = $this->renderMessage($value);
                     }
@@ -116,7 +120,14 @@ class Response extends \Yaoi\Io\Response implements Renderer
         $this->layout = $layout;
     }
 
+    /**
+     * @var Layout
+     */
     protected $layout;
+
+    /**
+     * @return Layout
+     */
     public function getLayout()
     {
         return $this->layout;

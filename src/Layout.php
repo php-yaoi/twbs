@@ -58,7 +58,6 @@ class Layout extends Hardcoded
 <!-- Bootstrap core JavaScript
 ================================================== -->
 <!-- Placed at the end of the document so the pages load faster -->
-<script src="/twbs/js/jquery.min.js"></script>
 <script src="/twbs/js/bootstrap.min.js"></script>
 <!-- IE10 viewport hack for Surface/desktop Windows 8 bug -->
 <script src="/twbs/js/ie10-viewport-bug-workaround.js"></script>
@@ -101,6 +100,7 @@ class Layout extends Hardcoded
     <script src="/twbs/js/html5shiv.min.js"></script>
     <script src="/twbs/js/respond.min.js"></script>
     <![endif]-->
+    <script src="/twbs/js/jquery.min.js"></script>
     <?php
     if ($this->styleUrls) {
         foreach ($this->styleUrls as $url) {
