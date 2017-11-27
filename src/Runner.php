@@ -36,7 +36,10 @@ class Runner extends BaseClass
             $response->error('<pre>' . $exception->getTraceAsString() . '</pre>');
         }
 
-        $layout->render();
+        $layout = $response->getLayout();
+        if ($layout !== null) {
+            $layout->render();
+        }
     }
 
 
