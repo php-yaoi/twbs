@@ -14,6 +14,8 @@ class Layout extends Hardcoded
     }
 
     public $title = 'ACME labs';
+    public $h1Href;
+    public $h1Title;
     public $description = '';
     public $author = '';
     public $faviconUrl = '/favicon.ico';
@@ -129,12 +131,12 @@ class Layout extends Hardcoded
 <!DOCTYPE html>
 <html lang="en">
 <?php $this->renderHead() ?>
-<body>
+<body style="padding-top: 15px">
 
 <?php $this->renderHeader() ?>
 
 <div class="container">
-    <h1><a href="/"><?= $this->title ?></a></h1>
+    <?= $this->h1Href ? "<h1><a href=\"$this->h1Href\">" . ($this->h1Title ? $this->h1Title : $this->title) . "</a></h1>" : '' ?>
     <?php echo $this->main ?>
 </div>
 
